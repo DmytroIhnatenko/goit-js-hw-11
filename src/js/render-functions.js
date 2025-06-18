@@ -71,17 +71,14 @@ function clearGallery() {
 }
 
 function showLoader() {
-  iziToast.show({
-    title: 'Loading...',
-    message: 'Fetching images from Pixabay...',
-    position: 'topCenter',
-    icon: 'fa fa-spinner fa-spin',
-    timeout: 5000,
-    zindex: 9999,
-  });
+  const loader = document.querySelector('.loader_cont');
+  loader.classList.remove('hidden');
+  loader.style.display = 'block';
 }
 function hideLoader() {
-  iziToast.hide();
+  const loader = document.querySelector('.loader_cont');
+  loader.classList.add('hidden');
+  loader.style.display = 'none';
 }
 
 export { createGallery, clearGallery, showLoader, hideLoader };
