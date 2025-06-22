@@ -9,25 +9,25 @@ import {
   hideLoader,
 } from './js/render-functions.js';
 
-const submitButton = document.querySelector('.btn_form');
+const form = document.querySelector('.form');
 
-submitButton.addEventListener('click', async event => {
+form.addEventListener('submit', async event => {
   event.preventDefault();
 
-  const data = submitButton.form.elements;
+  const data = form.elements;
+  const searchQuery = data['search-text'].value.trim();
 
-  const searchQuery = data['search-text'].value;
+  clearGallery();
 
-  console.log('Search Query:', searchQuery);
-
-  showLoader();
-  if (searchQuery.trim() === '') {
+  if (searchQuery === '') {
     iziToast.error({
       title: 'Error',
       message: 'Please enter a search query.',
     });
     return;
   }
+
+  showLoader();
 
   try {
     const images = await getImagesByQuery(searchQuery);
@@ -40,7 +40,6 @@ submitButton.addEventListener('click', async event => {
       return;
     }
 
-    clearGallery();
     createGallery(images);
   } catch (error) {
     iziToast.error({
@@ -49,6 +48,6 @@ submitButton.addEventListener('click', async event => {
     });
   } finally {
     hideLoader();
-    submitButton.form.reset();
+    form.reset();
   }
 });
